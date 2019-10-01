@@ -22,8 +22,7 @@ Features that will be developed soonTM:
   * Maximum of three submissions per Discord handle
   * Only accept submissions during the race event
 * Recognize judge validation in the submission channel
-  * <@DiscordHandle> - <cmdrname> - <shiptype> - <shipname> -
-<"VALID"/"INVALID"> for <x> m/s at <y> km - <remark>
+  * `<@DiscordHandle> - <cmdrname> - <shiptype> - <shipname> - <"VALID"/"INVALID"> for <x> m/s at <y> km - <remark>`
 * Ability to retrieve current submissions (all, latest, un-judged, judged)
 * Ability to configure race event start and end
 * Ability to purge current data after testing and after pre-race week
