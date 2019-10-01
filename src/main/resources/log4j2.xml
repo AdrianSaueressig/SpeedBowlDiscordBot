@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+  <Properties>
+    <Property name="logfile">log/SpeedBowl3DiscordBot.log</Property>
+  </Properties>
+
+  <Appenders>
+    <File name="SpeedBowlLog" fileName="${logfile}">
+      <PatternLayout>
+        <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+      </PatternLayout>
+    </File>
+  </Appenders>
+
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="SpeedBowlLog"/>
+    </Root>
+  </Loggers>
+
+</Configuration>

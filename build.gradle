@@ -1,0 +1,90 @@
+apply plugin: 'java-library'
+apply plugin: 'java'
+group 'com.nolacola'
+version '0.5-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+configurations{
+	dependency
+}
+repositories {
+    jcenter()
+}
+
+dependencies {
+	dependency group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
+    dependency group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
+    dependency group: 'net.dv8tion', name: 'JDA', version: '4.BETA.0_1' // discord api
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+    
+	dependency group: 'com.jagrosh', name: 'jda-utilities', version:'3.0.1' // discord utilities, such as easier commands
+    testImplementation 'junit:junit:4.12'
+    
+    configurations.compile.extendsFrom(configurations.dependency)
+}
+
+def getDate() {
+    return new Date().format('dd.MM.yyyy HH:mm:ss')
+}
+
+task copyDependencies(type: Copy) {
+	description 'copies the dependencies to the lib folder'
+	from configurations.dependency   
+	into 'lib'
+}
+
+task packageJar(type: Jar) {
+	description 'Creates a Jar of the SpeedBowl3DiscordBot'	
+	manifest {
+        attributes 'Implementation-Title': 'SpeedBowl3DiscordBot',  
+        	'Implementation-Version': version,
+        	'Build-Time': getDate(),
+        	'Main-Class': 'com.nolacola.discord.speedbowl.TheBot', 
+        	'Class-Path': '. ' + configurations.dependency.files.collect { "lib/$it.name" }.join(' ')
+    }
+    
+    with jar
+}
+packageJar.dependsOn copyDependencies
+
+task deleteDistDir(type: Delete){
+	description 'deletes the dist dir'
+	delete 'dist'
+}
+
+task buildProject(type: Copy){
+	description 'builds the whole project in the dist directory'
+	
+	into 'dist'
+	
+	// from 'settings.properties'
+	
+	// copy dependencies
+    into('lib'){
+		from 'lib'
+  	}
+
+	// copy SpeedBowl3DiscordBot Jar
+	from ('build/libs/'){
+		include '*.jar'
+	}
+}
+buildProject.dependsOn deleteDistDir
+buildProject.dependsOn packageJar
+
+task zipProject(type: Zip){
+	description 'zips the fully built project into the projects root folder'
+	
+    from 'dist'
+    destinationDir = file('.')
+}
+zipProject.dependsOn buildProject
