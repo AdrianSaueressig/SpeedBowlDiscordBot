@@ -10,10 +10,12 @@ The organizer has access to the bot in a way that they can retrieve the current 
 
 For participants this bot acts as a helper for basic questions when no admin or other participant is around. They can access current standings, as well as the validity and ranking of their submissions.
 
-**This is all Work In Progress**
+## Setup & Configuration
+* You need to fill in the hibernate.cfg.xml in src/main/resources if you want to use a database
+* You need to fill settings.properties->owner with your discord Id and token with your bot's token (https://discordapp.com/developers/applications/)
 
 ## Requirements by the organizer
-Features that will be developed soonTM:
+Features that the bot now has, sometimes in a slightly altered version
 
 **Must have**
 * Recognize submissions in the submission channel
@@ -46,3 +48,28 @@ Features that will be developed soonTM:
 * Puns depending on ship type submitted
 * Greet new participants
 * Automatic reminder of race dates
+
+%help displays: 
+```
+SpeedBot commands:
+
+%rules - Returns the rules for the event
+%forum - Returns the forumpost for the event
+%announcement - Returns the current announcement
+%prizes - Returns the prizes for the event
+%submit <cmdrname> - <shiptype> - <shipname> - <link>[ - <freetext>] - Submit your runs!
+%mySubmissions - View your submissions
+%leaderboard - View the Leaderboard
+%link <submissionid> - Get the videolink of a submission
+
+Admin Commands:
+%setup - Sets everything up for the race
+%announce - Enter a new announcement
+%props - Sends you a PM with all the properties in plain text
+%log - fetches logfile
+%purge - Purge DB and purgeable properties for a fresh start. Everyone needs one, once in a while.
+%list <all/latest/unjudged/judged> - List database entries
+%judge <submissionid> <valid/invalid> for <speed>m/s at <height>km [- <freetext>] [(bonusChallenge:)<valid/invalid>] - Judge a submission
+%raw <submissionid> - Get the raw submission text for a submission
+%shutdown - safely shuts off the bot
+```
