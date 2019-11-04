@@ -1,7 +1,7 @@
 apply plugin: 'java-library'
 apply plugin: 'java'
 group 'com.nolacola'
-version '0.5-SNAPSHOT'
+version '0.5'
 
 sourceCompatibility = 1.8
 
@@ -15,18 +15,17 @@ repositories {
 dependencies {
 	dependency group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
     dependency group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
-    dependency group: 'net.dv8tion', name: 'JDA', version: '4.BETA.0_1' // discord api
+    dependency group: 'net.dv8tion', name: 'JDA', version: '4.0.0_52' // discord api
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.7'
-
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
-    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.7'
-
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    dependency group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+	dependency group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'	
+	dependency group: 'joda-time', name: 'joda-time', version: '2.10.5'	
+	
+	//DB
+	dependency group: 'org.hibernate', name: 'hibernate-core', version: '5.4.7.Final'
+	dependency group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+	dependency group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'	
     
-	dependency group: 'com.jagrosh', name: 'jda-utilities', version:'3.0.1' // discord utilities, such as easier commands
+	dependency group: 'com.jagrosh', name: 'jda-utilities', version:'3.0.2' // discord utilities, such as easier commands
     testImplementation 'junit:junit:4.12'
     
     configurations.compile.extendsFrom(configurations.dependency)
@@ -66,7 +65,7 @@ task buildProject(type: Copy){
 	
 	into 'dist'
 	
-	// from 'settings.properties'
+	from 'settings.properties'
 	
 	// copy dependencies
     into('lib'){

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ public class PropertyManager {
 	private static final Logger log = LogManager.getLogger(TheBot.class);
 	
 	private static final String PROPERTIES_FILE = "settings.properties";
+	private static final String PROPERTY_SEPERATOR = ";";
 	private Properties sysProps = null;
 
 	{
@@ -39,6 +41,7 @@ public class PropertyManager {
 	}
 	
 	public String getPropertyByKey(PropertiesEnum property) {
+		loadProperties();
 		return sysProps.getProperty(property.getKey(), property.getDefaultValue());
 	}
 	
@@ -51,6 +54,18 @@ public class PropertyManager {
 		} catch (IOException e) {
 			log.error(ErrorCodes.ERROR_LOADING_PROPERTIES.getDescription(), e);
 		}
+	}
+	
+	public void resetToDefault(PropertiesEnum prop) {
+		setProperty(prop, prop.getDefaultValue());
+	}
+	
+	public void getAllProperties(PrintWriter out) {
+		sysProps.list(out);
+	}
+
+	public static String getPropertySeperator() {
+		return PROPERTY_SEPERATOR;
 	}
 
 }
